@@ -50,7 +50,7 @@ $app->get('/musixmatch', function() use ($app) {
 });
 
 $app->get('/question', function() use ($app) {
-	$feeds = array('Twitter','MusixMatch','RottenTomato','Craigslist');
+	$feeds = array('MusixMatch','RottenTomato','Craigslist');
 	$source = $feeds[array_rand($feeds)];
 	header('application/json');
 	require "lib/{$source}.php";

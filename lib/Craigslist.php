@@ -53,7 +53,7 @@ class Craigslist
         $i = 0;
         foreach($listings as $listing) {
 			// Check if a listing has an image
-			if (strpos($listing->span[0]->attributes()->id, ':')) {
+			if (strpos($listing->span[0]->attributes()->id, ':') && (string) $listing->price != '') {
 				// Strip the " -" from the end of the title
 				$results[$i]['title'] = (string) $listing->a;
 				$results[$i]['price'] = (string) $listing->price;
@@ -78,27 +78,26 @@ class Craigslist
 		
 		$listing = $listings[rand(0, $total-1)];
 		
-		$price = substr($listing['price'], 1, strlen($listing['price']) - 2);
+		$price = substr($listing['price'], 1, strlen($listing['price']) - 1);
+		
+		// if price is less than $10, set the range to 10
+		$range = ($price < 10) ? 10 : floor($price/4*rand(1,4));
 		
 		$correct = 0;
-		if ($price <= 25) {
-			$correct = 0;
-		} elseif ($price <= 50 && $price >= 26) {
-			$correct = 1;
-		} elseif ($price <= 200 && $price >= 51) {
-			$correct = 2;
-		} else {
-			$correct = 3;
+		for ($i = 0; $i <= 3; $i++) {
+			if (($i * $range) <= $price && (($i + 1) * $range) >= $price) {
+				$correct = $i;
+				break;
+			}
 		}
-		
 		return array(
 			'question' => "How much is this item selling for on craigslist?",
 			'photo' => $listing['photo'],
 			'answers' => array(
-				0 => '$0 - $25',
-				1 => '$26 - $50',
-				2 => '$51 - $200',
-				3 => '$201+'
+				0 => "Free - $" . $range,
+				1 => "$" . number_format($range + 1) . " - $" . number_format($range * 2),
+				2 => "$" . number_format($range * 2 + 1) . " - $" . number_format($range * 3),
+				3 => "$" . number_format($range * 4) . "+"
 			),
 			'correctAnswer' => $correct
 		);

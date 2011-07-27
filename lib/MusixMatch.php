@@ -107,7 +107,7 @@ class MusixMatch
 		$correctId = array_keys($artists, $correct);
 		
 		return array(
-			'question' => "Which artist sang the following lyric: <br>{$lyricChunk}",
+			'question' => "Which artist sang the following lyric: <br><span>{$lyricChunk}</span>",
 			'photo' => null,
 			'answers' => $artists,
 			'correctAnswer' => $correctId[0]

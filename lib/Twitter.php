@@ -46,15 +46,15 @@ class Twitter
 		$choices = array_rand($this->userList, 4);
 		$celebs = array();
 		foreach ($choices AS $celeb) {
-			$celebs[] = $this->getUser($this->userList[$celeb]);
+			$celebs[$celeb] = $this->getUser($this->userList[$celeb]);
 		}
 		
-		$correctId = array_rand($choices);
-		$correct = $this->getUser($this->userList[$correctId]);
+		$correctId = array_rand($celebs);
+		$correct = $celebs[$correctId];
 		$tweet = $correct[0]->status->text;
 		
 		return array(
-			'question' => "Which celebrity said the following: <br>{$tweet}",
+			'question' => "Which celebrity said the following: <br><span>{$tweet}</span>",
 			'photo' => null,
 			'answers' => array_map(function($v) {
 				return $v[0]->name;

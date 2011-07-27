@@ -92,26 +92,22 @@ class RottenTomato
 		
 		$characters = $this->getCharacters();
 		
-		$id = array_rand($characters);
-		$correct = $characters[$id];
-		unset($characters[$id]);
-		$others = array_rand($characters, 3);
-		$others[] = $id;
-		$characters[$id] = $correct;
-		shuffle($others);
+		$selectedCharacters = array_rand($characters, 4);
 		
-		$correctId = array_keys($characters, $correct);
+		foreach ($selectedCharacters AS $answer) {
+			$answers[] = $characters[$answer];
+		}
+		
+		shuffle($answers);
+		$correctId = array_rand($answers);
 		
 		return array(
-			'question' => "What character did {$correct->name} play in {$movie->title}?",
+			'question' => "What character did {$answers[$correctId]->name} play in {$movie->title}?",
 			'photo' => null,
-			'answers' => array(
-				0 => $characters[$others[0]]->characters[0],
-				1 => $characters[$others[1]]->characters[0],
-				2 => $characters[$others[2]]->characters[0],
-				3 => $characters[$others[3]]->characters[0]
-			),
-			'correctAnswer' => $correctId[0]
+			'answers' => array_map(function($v) {
+				return $v->characters[0];
+			}, $answers),
+			'correctAnswer' => $correctId
 		);
     }
 }
