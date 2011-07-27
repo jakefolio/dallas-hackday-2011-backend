@@ -100,7 +100,7 @@ class RottenTomato
 		$characters[$id] = $correct;
 		shuffle($others);
 		
-		$correctId = array_keys($others, $correct);
+		$correctId = array_keys($characters, $correct);
 		
 		return array(
 			'question' => "What character did {$correct->name} play in {$movie->title}?",

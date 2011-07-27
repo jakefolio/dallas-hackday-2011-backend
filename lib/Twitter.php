@@ -59,7 +59,7 @@ class Twitter
 			'answers' => array_map(function($v) {
 				return $v[0]->name;
 			}, $celebs),
-			'correctAnswer' => $correctId;
+			'correctAnswer' => $correctId
 		);
 	}
 }

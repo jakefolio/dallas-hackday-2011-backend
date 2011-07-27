@@ -1,4 +1,5 @@
 <?php
+
 require_once __DIR__.'/silex.phar'; 
 
 $app = new Silex\Application(); 
@@ -137,6 +138,7 @@ $app->post('/submit', function() use ($app) {
 
 $app->run();
 /*
+
 require 'lib/RottenTomato.php';
 
 $resource = new RottenTomato('php');
