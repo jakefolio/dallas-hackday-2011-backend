@@ -104,11 +104,13 @@ class MusixMatch
 		
 		shuffle($artists);
 		
+		$correctId = array_keys($artists, $correct);
+		
 		return array(
 			'question' => "Which artist sang the following lyric: <br>{$lyricChunk}",
 			'photo' => null,
 			'answers' => $artists,
-			'correctAnswer' => utf8_encode(utf8_decode($correct))
+			'correctAnswer' => $correctId[0]
 		);
 	}
 }
